@@ -1,0 +1,282 @@
+@use "@carbon/styles/scss/grid";
+@use "@carbon/styles";
+@use "@carbon/layout";
+@use "@carbon/colors";
+@use "../scss/reset.scss";
+
+@include grid.flex-grid();
+
+$textColor: white;
+$background: colors.$gray-100;
+$hoverColor: colors.$gray-80;
+$hoverBackgroundColor: colors.$gray-60;
+$borderColor: colors.$gray-40;
+$activeColor: colors.$gray-10;
+
+body {
+  background: colors.$white;
+}
+
+.header {
+  text-align: center;
+  background-color: $background;
+  color: $textColor;
+  border-bottom: none;
+}
+
+.burger {
+  & svg {
+    fill: $textColor;
+  }
+}
+
+a.cds--header__menu-item {
+  background-color: $background;
+  transition: background-color 0.5s linear;
+
+  &:focus {
+    border-color: $textColor !important;
+  }
+
+  &:hover {
+    background-color: $hoverBackgroundColor;
+  }
+
+  &--current {
+    &::after {
+      border-bottom-color: $textColor;
+    }
+  }
+}
+
+.cds--header__action {
+  transition: background-color 0.5s linear;
+
+  &:hover {
+    background-color: $hoverBackgroundColor;
+  }
+
+  &--active {
+    background-color: $background;
+  }
+
+  & svg {
+    transition: fill 0.5s linear;
+  }
+}
+
+#search,
+#notification,
+#apps {
+  fill: $textColor;
+  transition: fill 0.5s linear;
+
+  &:hover {
+    fill: $hoverColor;
+  }
+}
+
+.side {
+  background-color: $activeColor;
+}
+
+.cds--toggle {
+  max-width: 23.4%;
+  background-color: $activeColor;
+
+  &__label {
+    display: flex;
+    cursor: pointer;
+    width: 100%;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 15px;
+    
+    &-text {
+      margin-bottom: 0;
+    }
+  }
+
+  &__switch {
+    background-color: $activeColor;
+    
+    &--checked {
+      background-color: #0f62fe;
+    }
+  }
+}
+
+.cds--modal {
+  &-close {
+    transition: background 0.5s linear;
+
+    &:hover {
+      background: $hoverBackgroundColor;
+    }
+
+    &__icon {
+      transition: fill 0.5s linear;
+
+      &:hover {
+        fill: $textColor;
+      }
+    }
+  }
+  .cds--text-input.cards__input--modal  {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}
+
+.cds--btn-set .cds--btn:not(:focus) {
+  box-shadow: none;
+}
+
+.cards {
+  &__view {
+    margin-bottom: 1rem;
+    display: flex;
+    gap: layout.$spacing-07;
+  }
+
+  &__btn {
+    max-width: 23.4%;
+    width: 100%;
+
+    &--delete {
+      display: block;
+      padding: 11px 15px;
+      text-align: center;
+    }
+  }
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $borderColor;
+    padding-bottom: 10px;
+    word-break: break-all;
+    margin-right: 10px;
+  }
+
+  &__title {
+    min-height: 38.36px;
+  }
+
+  &__check {
+    flex-grow: 0;
+
+    & > input {
+      &:focus + .cds--checkbox-label {
+        &::before {
+          outline-color: $activeColor;
+        }
+      }
+
+      &:focus:checked + .cds--checkbox-label {
+        &::before {
+          background-color: $hoverBackgroundColor;
+          outline-color: $activeColor;
+        }
+      }
+
+      &:checked + .cds--checkbox-label {
+        &::before {
+          background-color: $hoverBackgroundColor;
+        }
+      }
+    }
+  }
+
+  &__items {
+    margin: 0;
+    gap: layout.$spacing-07;
+  }
+
+  &__item {
+    flex-basis: 23.4%;
+    flex-grow: 0;
+    padding: 0;
+    
+    &::before {
+      content: "" !important;
+    }
+  }
+  
+  &__content {
+    background-color: $activeColor;
+    color: $textColor;
+    box-shadow: 0 0 10px 2px $activeColor;
+    min-height: 20vh;
+    flex-grow: 0;
+    padding: 10px;
+    color: $background;
+    transition: border 0.5s linear;
+
+    &--editOn {
+      border: 1px solid red;
+    }
+
+    &--editOff {
+      border: 1px solid $borderColor;
+    }
+  }
+
+  &__icons {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+  }
+
+  &__input {
+    padding: 0;
+    background: none;
+    border: none;
+    letter-spacing: normal;
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 300;
+    height: auto;
+
+    &:active,
+    &:focus {
+      outline-color: $borderColor;
+    }
+  }
+
+  &__area {
+    font-size: 1rem;
+    line-height: 1.5;
+    outline: transparent;
+    word-break: break-all;
+  }
+
+  &__text {
+    word-break: break-all;
+  }
+
+  .cds--text-input-wrapper {
+    flex-grow: 0;
+    width: 80%;
+  }
+
+  &__icon {
+    cursor: pointer;
+  }
+
+  &__tag {
+    color: #da1e28;
+  }
+  
+  &__tags {
+    color: #0f62fe;
+  }
+}
+
+.cds--inline-loading {
+  flex-basis: 23.4%;
+  justify-content: center;
+  min-height: 20vh;
+}
