@@ -6,8 +6,8 @@ const Highlight = (text,tags) => {
   const regString = tags.map(tag => `${tag}(?=[,.!:;?\\s])|${tag}$`).join('|'); // создание строки для регулярки
   const regExp = new RegExp(regString,'img'); // создание регулярки
   console.log(regString);
-  return text.split(regExp).map((element,index,array)=> { //разделение текста по тегам и оборачивание всех теговых слов в span. Результат - массив с реакт фрагментами(теговые слова, обёрнутые в span)
-    if(index < array.length-1) {                          //фрагментами(теговые слова, обёрнутые в span) и не теговыми словами, без обертки
+  return text.split(regExp).map((element,index,array)=> { //разделение текста по тегам и оборачивание всех теговых слов в span. Результат - массив с реакт фрагментами(теговые слова, обёрнутые в span) и не теговыми словами, без обертки
+    if(index < array.length-1) {                          
       const tagWord = tagWords.shift();
       return <>{element}<span className="cards__tag">{tagWord}</span></>
     }
