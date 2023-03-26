@@ -26,7 +26,7 @@ const CARDS_DATA = [
     id: 'checkbox-4',
     title: 'Note4',
     text: 'films that i need to see',
-    tags: ['films']
+    tags: ['films','school']
   }
 ]
 
@@ -34,6 +34,9 @@ const Main = () => {
   const [cardsData, setCardsData] = useState(CARDS_DATA);
   const [viewMode, setViewMode] = useState(false);
   const [activeCards, updateActiveCards] = useState([]);
+  const [activeTag, setActiveTag] = useState('All')
+
+  console.log(cardsData);
 
   const cardHandler = newData => {
     setCardsData(prevData => {
@@ -57,15 +60,14 @@ const Main = () => {
     });
     updateActiveCards([]);
   }
-
-
+  const changeTagHandler = tag => setActiveTag(tag)
   return (
     <Content id="main-content">
       <section className="cards" id="cards">
         <div className="cds--grid">
-          <Cockpit checkboxHandler={checkboxHandler} deleteCardsHandler={deleteCardsHandler} addCardHandler={addCardHandler} viewMode={viewMode}/>
+          <Cockpit checkboxHandler={checkboxHandler} deleteCardsHandler={deleteCardsHandler} addCardHandler={addCardHandler} viewMode={viewMode} tags={[...cardsData.map(element => element.tags)]} changeTagHandler={changeTagHandler}/>
           <OrderedList className="cds--row cards__items">
-            <CardList cardsData={cardsData} onChangeCard={cardHandler} viewMode={viewMode} activeCards={activeCards} updateActiveCards={updateActiveCards}/>
+            <CardList cardsData={activeTag === "All" ? cardsData : cardsData.filter(element => element.tags.indexOf(activeTag) !== -1) } onChangeCard={cardHandler} viewMode={viewMode} activeCards={activeCards} updateActiveCards={updateActiveCards}/>
           </OrderedList>
         </div>
       </section>

@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import reactDom from 'react-dom'
 import { Toggle, Button } from "@carbon/react";
 import { v4 as id } from 'uuid'
-import { TextArea, TextInput } from '@carbon/react';
+import { TextArea, TextInput, Select, SelectItem } from '@carbon/react';
 import ModalWrapper from '../modalWrapper/modalWrapper'
 
 const settings = {
@@ -30,6 +30,7 @@ const settings = {
 }
 
 const Cockpit = props => {
+  const allTags = props.tags.flat().filter((item,index,arr) => arr.indexOf(item) === index);
   const [activeModal, setActiveModal] = useState('');
   const [toggleModal, setToggleModal] = useState({
     deleteModal: false,
@@ -79,11 +80,19 @@ const Cockpit = props => {
     </>
   )
 
+  const changeHandler = event => {
+    props.changeTagHandler(event.target.value);
+  }
+
   return (
     <div className="cards__view">
       <Toggle id="toggle-1" labelA="Off" labelB="On" labelText="Только просмотр" onToggle={props.checkboxHandler} className="cards__btn cards__btn--mode" />
       <Button kind='secondary' className="cards__btn cards__btn--delete" onClick={checkError.bind(this, 'deleteModal')}>Удалить выбранные заметки</Button>
       <Button kind='primary' className="cards__btn cards__btn--delete" onClick={checkError.bind(this, 'addModal')}>Добавить новую заметку</Button>
+      <Select labelText='Choose a tag to filter' onChange={changeHandler} id="cards__select">
+        <SelectItem value={'All'} text={'All'}></SelectItem>
+        {allTags.map(tag => <SelectItem key={tag} value={tag} text={tag}>{tag}</SelectItem>)}
+      </Select>
       {
         reactDom.createPortal(<ModalWrapper settings={settings[activeModal]} activeModal={activeModal} toggleModal={toggleModal} toggleHandler={toggleHandler} deleteModalSubmit={deleteModalSubmit} addModalSubmit={addModalSubmit} errorModalSubmit={errorModalSubmit} addModalContent={addModalContent()} viewMode={props.viewMode}/>, document.getElementById('modal'))
       }

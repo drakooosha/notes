@@ -5,7 +5,6 @@ const Highlight = (text,tags) => {
   const tagWords = [...allWords.filter(word => tags.indexOf(word) !== -1)]; //массив всех теговых слов, получаемый путём перебирания массива слов и нахождения данного слова в массиве тегов
   const regString = tags.map(tag => `${tag}(?=[,.!:;?\\s])|${tag}$`).join('|'); // создание строки для регулярки
   const regExp = new RegExp(regString,'img'); // создание регулярки
-  console.log(regString);
   return text.split(regExp).map((element,index,array)=> { //разделение текста по тегам и оборачивание всех теговых слов в span. Результат - массив с реакт фрагментами(теговые слова, обёрнутые в span) и не теговыми словами, без обертки
     if(index < array.length-1) {                          
       const tagWord = tagWords.shift();

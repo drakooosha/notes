@@ -33,26 +33,27 @@ const Card = (props) => {
     }
     if (classCheck) {
       changeClass(!classCheck);
-    } 
+    }
     changeMode(!editMode);
   }
 
   const btnSaveHandler = () => {
     const newTags = inputTextRef.current.innerText.trim().match(/#[a-zA-z\d]+(?= )|#[a-zA-z\d]+$/gmi); //создание массива всех новых тегов
-    const newUniqTags = newTags !== null ? newTags.map(tag => tag.replace(/#/gi,'')).filter((uniqTag,index,arr) => arr.indexOf(uniqTag) === index && props.tags.indexOf(uniqTag) === -1) : [];//удадение # и затем удаление дубликатов новых тегов, с проверкой того, что их нет в уже существующих
+    const newUniqTags = newTags !== null ? newTags.map(tag => tag.replace(/#/gi, '')).filter((uniqTag, index, arr) => arr.indexOf(uniqTag) === index && props.tags.indexOf(uniqTag) === -1) : [];//удадение # и затем удаление дубликатов новых тегов, с проверкой того, что их нет в уже существующих
     const newCard = {
       id: props.id,
       title: title,
-      text: inputTextRef.current.innerText.replace(/#/gi,'').trim(),
-      tags: [...props.tags.filter(tag => inputTextRef.current.innerText.trim().replace(/[,.!:;?\s]/g,'#').split('#').indexOf(tag) !== -1), ...newUniqTags] //итоговый массив тегов, состоящий из 2-х: массив старых тегов, отфильтрованный по их наличию в тексте и массив новых тегов
-    }                                                                                                         
+      text: inputTextRef.current.innerText.replace(/#/gi, '').trim(),
+      tags: [...props.tags.filter(tag => inputTextRef.current.innerText.trim().replace(/[,.!:;?\s]/g, '#').split('#').indexOf(tag) !== -1), ...newUniqTags] //итоговый массив тегов, состоящий из 2-х: массив старых тегов, отфильтрованный по их наличию в тексте и массив новых тегов
+    }
     changeMode(!editMode);
     props.onChangeCard(newCard);
   }
 
   const btnCancelHandler = useCallback(() => {
+    setTitle(props.defaultData.title);
     changeMode(false);
-  }, [])
+  }, [props.defaultData.title])
 
   useEffect(() => {
     if (props.viewMode) btnCancelHandler();
@@ -66,7 +67,7 @@ const Card = (props) => {
     <ListItem className="cds--col cards__item">
       <div className={`cards__content ${'cards__content--' + (classCheck ? 'editOn' : 'editOff')}`}>
         <CardHeader title={title} btnCancelHandler={btnCancelHandler} btnSaveHandler={btnSaveHandler} modeHandler={modeHandler} checkboxHandler={checkboxHandler} editMode={editMode} viewMode={props.viewMode} id={props.id} inputTitleRef={inputTitleRef} titleHandler={titleHandler}></CardHeader>
-        <CardBody text={props.defaultData.text} editMode={editMode} inputTextRef={inputTextRef} tags={props.tags}/>
+        <CardBody text={props.defaultData.text} editMode={editMode} inputTextRef={inputTextRef} tags={props.tags} />
       </div>
       <p className='cards__tags'>{
         props.tags.map(element => `#${element}`)
@@ -75,5 +76,6 @@ const Card = (props) => {
   );
 };
 
-const CardWithLoading = (props) => WithLoadingDelay(Card, props)
+const CardWithLoading = props => WithLoadingDelay(Card, props)
+
 export default CardWithLoading;
