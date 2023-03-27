@@ -26,7 +26,7 @@ const CARDS_DATA = [
     id: 'checkbox-4',
     title: 'Note4',
     text: 'films that i need to see',
-    tags: ['films','school']
+    tags: ['films']
   }
 ]
 

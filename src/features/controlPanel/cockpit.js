@@ -10,21 +10,21 @@ const settings = {
     "primaryButtonText": "Да",
     "secondaryButtonText": "Нет",
     "danger": true,
-    "modalHeading": "Вы действительно хотите удалить выбранные заметки?",
+    "modalHeading": "Do you really want to delete the selected notes",
     "onRequestClose": "deleteModal",
   },
   addModal: {
-    "primaryButtonText": "Добавить",
-    "secondaryButtonText": "Отменить",
+    "primaryButtonText": "Add",
+    "secondaryButtonText": "Cancel",
     "danger": false,
-    "modalHeading": "Заполните новую заметку",
+    "modalHeading": "Add information aboute note",
     "onRequestClose": "addModal",
   },
   errorModal: {
     "primaryButtonText": "Ok",
     "secondaryButtonText": "",
     "danger": true,
-    "modalHeading": "В режиме просмотра нельзя удалять или добавлять заметки!",
+    "modalHeading": "You can't delete notes in view mode",
     "onRequestClose": "errorModal",
   }
 }
@@ -75,8 +75,8 @@ const Cockpit = props => {
 
   const addModalContent = () => (
     <>
-      <TextInput className="cards__input--modal" id="title" placeholder="Введите имя заметки" ref={inputTitleRef} labelText="Имя заметки" />
-      <TextArea id="text" placeholder='Введите текст заметки' ref={inputTextRef} labelText="Текст заметки" />
+      <TextInput className="cards__input--modal" id="title" placeholder="Write note title" ref={inputTitleRef} labelText="Note title" />
+      <TextArea id="text" placeholder='Write note text' ref={inputTextRef} labelText="Note text" />
     </>
   )
 
@@ -86,9 +86,9 @@ const Cockpit = props => {
 
   return (
     <div className="cards__view">
-      <Toggle id="toggle-1" labelA="Off" labelB="On" labelText="Только просмотр" onToggle={props.checkboxHandler} className="cards__btn cards__btn--mode" />
-      <Button kind='secondary' className="cards__btn cards__btn--delete" onClick={checkError.bind(this, 'deleteModal')}>Удалить выбранные заметки</Button>
-      <Button kind='primary' className="cards__btn cards__btn--delete" onClick={checkError.bind(this, 'addModal')}>Добавить новую заметку</Button>
+      <Toggle id="toggle-1" labelA="Off" labelB="On" labelText="View mode" onToggle={props.checkboxHandler} className="cards__btn cards__btn--mode" />
+      <Button kind='secondary' className="cards__btn cards__btn--delete" onClick={checkError.bind(this, 'deleteModal')}>Delete selected notes</Button>
+      <Button kind='primary' className="cards__btn cards__btn--delete" onClick={checkError.bind(this, 'addModal')}>Add new note</Button>
       <Select labelText='Choose a tag to filter' onChange={changeHandler} id="cards__select">
         <SelectItem value={'All'} text={'All'}></SelectItem>
         {allTags.map(tag => <SelectItem key={tag} value={tag} text={tag}>{tag}</SelectItem>)}
